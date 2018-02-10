@@ -18,7 +18,7 @@ import {
 export default class HomeScreen extends React.Component {
   render() {
     return (
-      <Container>
+      <Container >
         <Header>
           <Left>
             <Button

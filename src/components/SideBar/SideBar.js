@@ -10,16 +10,15 @@ import {
   Icon
 } from "native-base";
 const routes = ["Home", "Chat", "Profile"];
+import icon from '../../../assets/icon.png'
+import bgImg from '../../../assets/images/background.jpeg'
 export default class SideBar extends React.Component {
   render() {
     return (
       <Container>
         <Content>
           <Image
-            source={{
-              uri:
-                "https://raw.githubusercontent.com/GeekyAnts/NativeBase-KitchenSink/master/assets/drawer-cover.png"
-            }}
+            source={bgImg}
             style={{
               height: 120,
               width: "100%",
@@ -36,10 +35,7 @@ export default class SideBar extends React.Component {
               alignSelf: "center",
               top: 20
             }}
-            source={{
-              uri:
-                "https://raw.githubusercontent.com/GeekyAnts/NativeBase-KitchenSink/master/assets/logo.png"
-            }}
+            source={icon}
           />
           <List
             dataArray={routes}
