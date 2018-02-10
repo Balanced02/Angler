@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -25,19 +25,11 @@ export default class UserInput extends Component {
 	}
 }
 
-UserInput.propTypes = {
-	source: PropTypes.number.isRequired,
-	placeholder: PropTypes.string.isRequired,
-	secureTextEntry: PropTypes.bool,
-	autoCorrect: PropTypes.bool,
-	autoCapitalize: PropTypes.string,
-	returnKeyType: PropTypes.string,
-};
 
 const styles = StyleSheet.create({
 	input: {
 		backgroundColor: 'rgba(255, 255, 255, 0.4)',
-		width: '70%',
+		width: 300,
 		height: 40,
 		marginHorizontal: 20,
 		paddingLeft: 45,
