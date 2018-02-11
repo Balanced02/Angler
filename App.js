@@ -14,7 +14,6 @@ export default class App extends React.Component {
   }
 
   async componentWillMount() {
-
     this.setState({ isReady: true });
   }
 
@@ -32,6 +31,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 18,
   },
 });
+  

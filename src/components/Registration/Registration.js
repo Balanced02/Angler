@@ -7,12 +7,16 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  Container,
   Alert,
   TextInput,
   TouchableHighlight,
   Header,
   Title,
   Left,
+  Toast,
+  Button,
+  Body,
   Icon,
   Right
 } from "react-native";
@@ -135,7 +139,7 @@ class RegisterScreen extends Component {
       occupation: value.occupation
     };
     db
-      .put()
+      .put(Person)
       .then(data => {
         // this.getPouchNotes();
         Toast.show({
@@ -143,8 +147,14 @@ class RegisterScreen extends Component {
           position: "bottom",
           buttonText: "Okay"
         });
+        this.setState({ formData: null });
       })
-      .catch(err => console.log("Error Creating Note"));
+      .catch(err => { Toast.show({
+        text: "Error",
+        position: "bottom",
+        buttonText: "Okay"
+      })
+    });
   }
 
   createPouchNoteDemo() {
@@ -152,6 +162,11 @@ class RegisterScreen extends Component {
       { text: "OK", onPress: () => console.log("OK Pressed") }
     ]);
   }
+
+  onChange(value) {
+    this.setState({ formData });
+  }
+
 
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -183,15 +198,14 @@ class RegisterScreen extends Component {
       .on("active", info => console.log("replication resumed."))
       .on("error", err => console.log("uh oh! an error occured."));
   }
+  
+
 
   render() {
     return (
-      
-      <Header>
-        <Title>Register</Title>
-      </Header>
       <View>
-        <Form ref="form" type={Person} options={options} />
+        <Form ref="form" type={Person}
+         options={options} />
         <TouchableHighlight
           style={styles.button}
           onPress={() => this.takePicture()}
