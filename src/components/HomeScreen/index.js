@@ -4,13 +4,14 @@ import MainScreenNavigator from "../ChatScreen/index.js";
 import ProfileScreen from "../ProfileScreen/index.js";
 import SideBar from "../SideBar/SideBar.js";
 import { DrawerNavigator } from "react-navigation";
-
+import RegistrationScreenRouter from '../Registration/Registration';
 const HomeScreenRouter = DrawerNavigator(
   {
     Home: { screen: HomeScreen },
     Chat: { screen: MainScreenNavigator },
-    ProfileScreen: { screen: ProfileScreen }
-  },
+    ProfileScreen: { screen: ProfileScreen },
+    Registration: { screen: RegistrationScreenRouter}
+  },  
   {
     contentComponent: props => <SideBar {...props} />
   }

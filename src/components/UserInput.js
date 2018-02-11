@@ -19,7 +19,8 @@ export default class UserInput extends Component {
 					autoCapitalize={this.props.autoCapitalize}
 					returnKeyType={this.props.returnKeyType}
 					placeholderTextColor='white'
-					underlineColorAndroid='transparent' />
+					underlineColorAndroid='transparent'
+					/>
 			</View>
 		);
 	}
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		marginHorizontal: 20,
 		paddingLeft: 45,
+		paddingBottom: 10,
 		borderRadius: 20,
 		color: '#ffffff',
 	},

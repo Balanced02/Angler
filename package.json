@@ -4,10 +4,14 @@
   "dependencies": {
     "expo": "^25.0.0",
     "native-base": "^2.3.8",
-    "pouchdb": "^6.4.3",
+    "pouchdb-find": "^6.4.3",
+    "pouchdb-react-native": "^6.4.0",
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react-native-fetch-blob": "^0.10.8",
+    "react-native-image-crop-picker": "^0.19.2",
     "react-navigation": "^1.0.3",
-    "react-navigator": "0.0.0-0"
+    "react-navigator": "0.0.0-0",
+    "tcomb-form-native": "^0.6.11"
   }
 }

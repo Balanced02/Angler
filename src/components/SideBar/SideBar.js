@@ -9,9 +9,10 @@ import {
   Content,
   Icon
 } from "native-base";
-const routes = ["Home", "Chat", "Profile"];
+const routes = ["Home", "Chat", "Profile", "Registration"];
 import icon from '../../../assets/icon.png'
 import bgImg from '../../../assets/images/background.jpeg'
+import Registration from "../Registration/Registration";
 export default class SideBar extends React.Component {
   render() {
     return (
