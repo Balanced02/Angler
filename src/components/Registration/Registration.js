@@ -149,12 +149,13 @@ class RegisterScreen extends Component {
         });
         this.setState({ formData: null });
       })
-      .catch(err => { Toast.show({
-        text: "Error",
-        position: "bottom",
-        buttonText: "Okay"
-      })
-    });
+      .catch(err => {
+        Toast.show({
+          text: "Error",
+          position: "bottom",
+          buttonText: "Okay"
+        })
+      });
   }
 
   createPouchNoteDemo() {
@@ -198,14 +199,28 @@ class RegisterScreen extends Component {
       .on("active", info => console.log("replication resumed."))
       .on("error", err => console.log("uh oh! an error occured."));
   }
-  
+
 
 
   render() {
     return (
       <View>
+        <Header>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}
+            >
+              <Icon name="menu" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>HomeScreen</Title>
+          </Body>
+          <Right />
+        </Header>
         <Form ref="form" type={Person}
-         options={options} />
+          options={options} />
         <TouchableHighlight
           style={styles.button}
           onPress={() => this.takePicture()}
@@ -260,9 +275,6 @@ const RegistrationScreenRouter = DrawerNavigator(
     Register: { screen: RegisterScreen },
     Data: { screen: DataScreen }
   },
-  {
-    initialRouteName: "Register"
-  }
 );
 
 export default RegistrationScreenRouter;

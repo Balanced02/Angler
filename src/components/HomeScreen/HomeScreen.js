@@ -35,7 +35,7 @@ export default class HomeScreen extends React.Component {
           <Right />
         </Header>
         <Content padder>
-          <Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate("TranslateScreen")} >
+          <Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate("Registration")} >
             <Card >
               <CardItem header>
                 <Text>Register</Text>
