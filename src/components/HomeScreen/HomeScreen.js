@@ -14,6 +14,7 @@ import {
   Icon,
   Right
 } from "native-base";
+import FontAwesome, { Icons } from 'react-native-fontawesome'
 
 export default class HomeScreen extends React.Component {
   render() {
@@ -34,21 +35,41 @@ export default class HomeScreen extends React.Component {
           <Right />
         </Header>
         <Content padder>
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>Chat App to talk some awesome people!</Text>
-              </Body>
-            </CardItem>
-          </Card>
-          <Button
-            full
-            rounded
-            dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("Chat")}
-          >
-            <Text>Chat With People</Text>
+          <Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate("TranslateScreen")} >
+            <Card >
+              <CardItem header>
+                <Text>Register</Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <FontAwesome > {Icons.registered} </FontAwesome>
+                </Body>
+              </CardItem>
+            </Card>
+          </Button>
+          <Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate("TranslateScreen")} >
+            <Card >
+              <CardItem header>
+                <Text>Verify</Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <FontAwesome > {Icons.checkSquareO} </FontAwesome>
+                </Body>
+              </CardItem>
+            </Card>
+          </Button>
+          <Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate("TranslateScreen")} >
+            <Card >
+              <CardItem header>
+                <Text>Communicate</Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <FontAwesome > {Icons.commentsO} </FontAwesome>
+                </Body>
+              </CardItem>
+            </Card>
           </Button>
           <Button
             full
@@ -58,6 +79,15 @@ export default class HomeScreen extends React.Component {
             onPress={() => this.props.navigation.navigate("ProfileScreen")}
           >
             <Text>Goto Profiles</Text>
+          </Button>
+          <Button
+            full
+            rounded
+            primary
+            style={{ marginTop: 10 }}
+            onPress={() => this.props.navigation.navigate("TranslateScreen")}
+          >
+            <Text>Translate</Text>
           </Button>
         </Content>
       </Container>
