@@ -102,10 +102,11 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     alignItems: 'center',
+    borderRadius: 20,
   },
   button: {
     height: 30,
-    width: 50,
+    width: 60,
   }
 });
 
