@@ -13,12 +13,12 @@ import UserInput from "../UserInput";
 import usernameImg from '../../../assets/images/username.png';
 import passwordImg from '../../../assets/images/password.png';
 import eyeImg from '../../../assets/images/eye_black.png';
-import { DrawerNavigator } from "react-navigation";
+import { StackNavigator } from "react-navigation";
 import HomeScreenNavigator from "../HomeScreen/index.js";
 import Wallpaper from '../Wallpaper'
 import Logo from '../Logo'
 import spinner from '../../../assets/images/loading.gif'
-
+import Tabs from '../../router/config.js'
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -110,11 +110,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const LoginScreenRouter = DrawerNavigator(
+const LoginScreenRouter = StackNavigator(
   {
     Login: { screen: LoginScreen },
-    Home: { screen: HomeScreenNavigator },
+    Home: { screen: Tabs },
   },
+  {
+ mode: 'modal',
+ headerMode: 'none',
+},
   {
     initialRouteName: 'Login'
   }

@@ -10,6 +10,8 @@ class Full extends React.Component {
   static navigationOptions = {
     title: "All Contacts"
   };
+
+  
   render() {
     return (
       <View>
