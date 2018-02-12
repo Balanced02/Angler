@@ -10,6 +10,7 @@
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
     "react-native-fontawesome": "^5.7.0",
+    "react-native-qrcode": "^0.2.6",
     "react-navigation": "^1.0.3",
     "react-navigator": "0.0.0-0",
     "tcomb-form-native": "^0.6.11"

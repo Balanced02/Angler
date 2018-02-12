@@ -1,69 +1,35 @@
 import React from "react";
 import { AppRegistry, View, StatusBar } from "react-native";
-import { NavigationActions } from "react-navigation";
+import QRCode from 'react-native-qrcode';
 import {
-  Button,
-  Text,
-  Container,
-  Card,
-  CardItem,
-  Body,
-  Content,
-  Header,
-  Left,
-  Right,
-  Icon,
-  Title,
-  Input,
-  InputGroup,
-  Item,
-  Tab,
-  Tabs,
-  Footer,
-  FooterTab,
-  Label
-} from "native-base";
+  StyleSheet,
+  TextInput
+} from 'react-native';
 import HomeScreen from "../HomeScreen";
 
 export default class Data extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+        text: 'http://facebook.github.io/react-native/',    
+    }
+  }
+
   render() {
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}
-            >
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Lucy Chat</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Content padder>
-          <Item floatingLabel style={{ marginTop: 20 }}>
-            <Label>Lucy Chat</Label>
-            <Input />
-          </Item>
-          <Button
-            rounded
-            danger
-            style={{ marginTop: 20, alignSelf: "center" }}
-            onPress={() => {
-              const navigationAction = NavigationActions.navigate({
-                routeName: "ProfileScreen",
-                params: { name: "lucy" }
-              });
-              this.props.navigation.dispatch(navigationAction);
-            }}
-          >
-            <Text>Goto Lucy Profile</Text>
-          </Button>
-        </Content>
-      </Container>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => this.setState({text: text})}
+          value={this.state.text}
+        />
+        <QRCode
+          value={this.state.text}
+          size={200}
+          bgColor='purple'
+          fgColor='white'/>
+      </View>
     );
   }
 }
