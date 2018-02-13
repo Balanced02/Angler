@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Container, Content, Picker, Button, Text } from "native-base";
 import Expo from "expo";
 import LoginScreen from "./src/components/Login/Login.js"
+import Tabs from '../NewAngler/src/router/config'
 
 export default class App extends React.Component {
 
@@ -21,7 +22,7 @@ export default class App extends React.Component {
     if (!this.state.isReady) {
       return <Expo.AppLoading />;
     }
-    return <LoginScreen />;
+    return <LoginScreen/>;
   }
 }
 

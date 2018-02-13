@@ -7,7 +7,7 @@ import CommunicationScreen from '../components/Communication/Communication';
 import VerificationScreen from "../components/Verification/Verification";
 
 
-export const Tabs = TabNavigator({
+export default Tabs = TabNavigator({
     Register: {
       screen: RegistrationScreen,
       navigationOptions: {

@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import {
   StyleSheet,
-  KeyboardAvoidingView,
   View,
-  ActivityIndicator,
   TouchableOpacity,
   Image,
   Text,
@@ -15,18 +13,15 @@ import {
   Title,
   Left,
   Toast,
+  Picker,
   Button,
   Body,
   Icon,
   Right
 } from "react-native";
-import t from "tcomb-form-native";
+import { Moment } from "moment";
+import CalendarPicker from 'react-native-calendar-picker';
 import UserInput from "../UserInput";
-import usernameImg from "../../../assets/images/username.png";
-import passwordImg from "../../../assets/images/password.png";
-// import RNFetchBlob from 'react-native-fetch-blob'
-// import ImagePicker from 'react-native-image-crop-picker'
-import eyeImg from "../../../assets/images/eye_black.png";
 import ButtonSubmit from "../ButtonSubmit.js";
 import { DrawerNavigator } from "react-navigation";
 import DataScreen from "./result.js";
@@ -41,49 +36,12 @@ PouchDB.plugin(PouchFind);
 const db = new PouchDB("angler");
 const remoteCouch = Credentials.cloudant_url;
 
-var Form = t.form.Form;
-
-var Gender = t.enums({
-  M: "Male",
-  F: "Female"
-});
-
-var Person = t.struct({
-  name: t.String, // a required string
-  occupation: t.maybe(t.String), // an optional string
-  DOB: t.String, // a required number
-  PlaceOfReg: t.String,
-  gender: Gender // enum       // a boolean
-});
-
-var options = {
-  fields: {
-    name: {
-      label: "Name", // <= label for the name field
-      placeholder: "Please enter your name"
-    },
-
-    occupation: {
-      label: "Occupation",
-      placeholder: "Enter your Occupation"
-    },
-    DOB: {
-      label: "Date Of Birth"
-    },
-    PlaceOfReg: {
-      label: "Place of Registration",
-      placeholder: "Enter the place of registraion"
-    },
-    gender: {
-      label: "Gender"
-    }
-  }
-};
 
 class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedStartDate: null,
       selectedItem: undefined,
       selected1: "key1",
       showToast: false,
@@ -92,11 +50,21 @@ class RegistrationScreen extends Component {
       },
       showPass: true,
       press: false,
-      formData: {},
+      fullName:"",
+      gender:"",
+      occupation:"",
+      PlaceOfReg:"",
       hasCameraPermission: null,
       type: Camera.Constants.Type.back
     };
   }
+
+  onDateChange(date) {
+    this.setState({
+      selectedStartDate: date,
+    });
+  }
+
 
   onPress() {
     // call getValue() to get the values of the form
@@ -129,14 +97,17 @@ class RegistrationScreen extends Component {
   }
 
   createPouchNote() {
+    const { selectedStartDate } = this.state;
+    const startDate = selectedStartDate ? selectedStartDate.toString() : '';
+
     const date = new Date().toISOString();
-    var value = this.refs.form.getValue();
     var Person = {
       _id: date,
-      name: value.name,
-      gender: value.gender,
-      location: value.PlaceOfReg,
-      occupation: value.occupation
+      name: this.state.fullName,
+      gender: this.state.gender,
+      location: this.state.PlaceOfReg,
+      occupation: this.state.occupation,
+      DOB: startDate
     };
     db
       .put(Person)
@@ -147,7 +118,12 @@ class RegistrationScreen extends Component {
           position: "bottom",
           buttonText: "Okay"
         });
-        this.setState({ formData: null });
+        this.setState({ 
+          occupation: "",
+          fullName: "",
+          PlaceOfReg: "",
+          gender: ""
+         });
       })
       .catch(err => { Toast.show({
         text: "Error",
@@ -204,8 +180,37 @@ class RegistrationScreen extends Component {
   render() {
     return (
       <View>
-        <Form ref="form" type={Person}
-         options={options} />
+        <TextInput
+        label="Full Name"
+        placeholder = "Enter Full Name"
+        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        onChangeText={(text) => this.setState({fullName: text})}
+        value={this.state.text}
+      />
+        <Picker
+          selectedValue={this.state.language}
+          label = "Gender"
+          onValueChange={(itemValue, itemIndex) => this.setState({gender: itemValue})}>
+          <Picker.Item label="Female" value="Female" />
+          <Picker.Item label="Male" value="Male" />
+        </Picker>
+        <TextInput
+        label="Occupation"
+        placeholder = "Enter Occupation"
+        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        onChangeText={(text) => this.setState({occupation: text})}
+        value={this.state.text}
+      /><TextInput
+      label="Place of Registration"
+      placeholder = "Enter location for Registration"
+      style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+      onChangeText={(text) => this.setState({PlaceOfReg: text})}
+      value={this.state.text}
+    /> 
+    <CalendarPicker
+          label= "Date of Birth"
+          onDateChange={(date) => this.onDateChange(date)}
+        />
         <TouchableHighlight
           style={styles.button}
           onPress={() => this.takePicture()}
