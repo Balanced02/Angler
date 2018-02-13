@@ -14,11 +14,10 @@ import usernameImg from '../../../assets/images/username.png';
 import passwordImg from '../../../assets/images/password.png';
 import eyeImg from '../../../assets/images/eye_black.png';
 import { StackNavigator } from "react-navigation";
-import HomeScreenNavigator from "../HomeScreen/index.js";
 import Wallpaper from '../Wallpaper'
 import Logo from '../Logo'
 import spinner from '../../../assets/images/loading.gif'
-import Tabs from '../../router/config.js'
+import Tabs from '../../router/config'
 class LoginScreen extends Component {
   constructor(props) {
     super(props);

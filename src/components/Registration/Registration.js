@@ -80,7 +80,7 @@ var options = {
   }
 };
 
-class RegisterScreen extends Component {
+class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {

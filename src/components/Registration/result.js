@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TextInput
 } from 'react-native';
-import HomeScreen from "../HomeScreen";
 
 export default class Data extends React.Component {
 
