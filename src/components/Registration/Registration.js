@@ -12,13 +12,13 @@ import {
   Header,
   Title,
   Left,
-  Toast,
   Picker,
   Button,
   Body,
   Icon,
   Right
 } from "react-native";
+
 import { Moment } from "moment";
 import CalendarPicker from 'react-native-calendar-picker';
 import UserInput from "../UserInput";
@@ -51,7 +51,7 @@ class RegistrationScreen extends Component {
       showPass: true,
       press: false,
       fullName:"",
-      gender:"",
+      gender: null,
       occupation:"",
       PlaceOfReg:"",
       hasCameraPermission: null,
@@ -113,11 +113,7 @@ class RegistrationScreen extends Component {
       .put(Person)
       .then(data => {
         // this.getPouchNotes();
-        Toast.show({
-          text: "Successfully Saved",
-          position: "bottom",
-          buttonText: "Okay"
-        });
+        console.log(data);
         this.setState({ 
           occupation: "",
           fullName: "",
@@ -125,11 +121,8 @@ class RegistrationScreen extends Component {
           gender: ""
          });
       })
-      .catch(err => { Toast.show({
-        text: "Error",
-        position: "bottom",
-        buttonText: "Okay"
-      })
+      .catch(err => {
+        console.log(err)
     });
   }
 
@@ -172,7 +165,7 @@ class RegistrationScreen extends Component {
       })
       .on("paused", info => console.log("replication paused."))
       .on("active", info => console.log("replication resumed."))
-      .on("error", err => console.log("uh oh! an error occured."));
+      .on("error", err => console.log(err + "uh oh! an error occured."));
   }
 
 
@@ -185,27 +178,27 @@ class RegistrationScreen extends Component {
         placeholder = "Enter Full Name"
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
         onChangeText={(text) => this.setState({fullName: text})}
-        value={this.state.text}
+        value={this.state.fullName}
       />
         <Picker
-          selectedValue={this.state.language}
+          selectedValue={this.state.gender}
           label = "Gender"
           onValueChange={(itemValue, itemIndex) => this.setState({gender: itemValue})}>
-          <Picker.Item label="Female" value="Female" />
-          <Picker.Item label="Male" value="Male" />
+          <Picker.Item label="Female" value="F" />
+          <Picker.Item label="Male" value="M" />
         </Picker>
         <TextInput
         label="Occupation"
         placeholder = "Enter Occupation"
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
         onChangeText={(text) => this.setState({occupation: text})}
-        value={this.state.text}
+        value={this.state.occupation}
       /><TextInput
       label="Place of Registration"
       placeholder = "Enter location for Registration"
       style={{height: 40, borderColor: 'gray', borderWidth: 1}}
       onChangeText={(text) => this.setState({PlaceOfReg: text})}
-      value={this.state.text}
+      value={this.state.PlaceOfReg}
     /> 
     <CalendarPicker
           label= "Date of Birth"

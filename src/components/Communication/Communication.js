@@ -10,7 +10,6 @@ import {
   Picker
 } from 'react-native';
 import t from "tcomb-form-native";
-
 var Form = t.form.Form;
 var Language = t.enums({
   ru: "Russian",
@@ -35,6 +34,8 @@ class CommunicationScreen extends Component {
       text: "",
     }
   }
+
+
   translate(){
     var language = this.state.language;
     var text = this.state.text;
@@ -78,6 +79,7 @@ class CommunicationScreen extends Component {
         </TouchableHighlight>
 
         <Text>{this.state.translatedWords}</Text>
+       
 </ScrollView>
     );
   }
