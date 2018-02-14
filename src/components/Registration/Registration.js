@@ -16,10 +16,11 @@ import {
   Button,
   Body,
   Icon,
-  Right
+  Right,
+  Dimensions
 } from "react-native";
 
-import { Moment } from "moment";
+// import moment from "moment";
 import CalendarPicker from 'react-native-calendar-picker';
 import UserInput from "../UserInput";
 import ButtonSubmit from "../ButtonSubmit.js";
@@ -36,7 +37,6 @@ PouchDB.plugin(PouchFind);
 const db = new PouchDB("angler");
 const remoteCouch = Credentials.cloudant_url;
 
-
 class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
@@ -50,10 +50,10 @@ class RegistrationScreen extends Component {
       },
       showPass: true,
       press: false,
-      fullName:"",
+      fullName: "",
       gender: null,
-      occupation:"",
-      PlaceOfReg:"",
+      occupation: "",
+      PlaceOfReg: "",
       hasCameraPermission: null,
       type: Camera.Constants.Type.back
     };
@@ -64,7 +64,6 @@ class RegistrationScreen extends Component {
       selectedStartDate: date,
     });
   }
-
 
   onPress() {
     // call getValue() to get the values of the form
@@ -114,16 +113,16 @@ class RegistrationScreen extends Component {
       .then(data => {
         // this.getPouchNotes();
         console.log(data);
-        this.setState({ 
+        this.setState({
           occupation: "",
           fullName: "",
           PlaceOfReg: "",
           gender: ""
-         });
+        });
       })
       .catch(err => {
         console.log(err)
-    });
+      });
   }
 
   createPouchNoteDemo() {
@@ -135,7 +134,6 @@ class RegistrationScreen extends Component {
   onChange(value) {
     this.setState({ formData });
   }
-
 
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -168,40 +166,39 @@ class RegistrationScreen extends Component {
       .on("error", err => console.log(err + "uh oh! an error occured."));
   }
 
-
-
   render() {
     return (
-      <View>
+      <View style={styles.container} >
         <TextInput
-        label="Full Name"
-        placeholder = "Enter Full Name"
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(text) => this.setState({fullName: text})}
-        value={this.state.fullName}
-      />
+          label="Full Name"
+          placeholder="Enter Full Name"
+          style={styles.input}
+          onChangeText={(text) => this.setState({ fullName: text })}
+          value={this.state.fullName}
+        />
         <Picker
           selectedValue={this.state.gender}
-          label = "Gender"
-          onValueChange={(itemValue, itemIndex) => this.setState({gender: itemValue})}>
-          <Picker.Item label="Female" value="F" />
-          <Picker.Item label="Male" value="M" />
+          label="Gender"
+          style={styles.input}
+          onValueChange={(itemValue, itemIndex) => this.setState({ gender: itemValue })}>
+          <Picker.Item label="Female" value="F" style={styles.input} />
+          <Picker.Item label="Male" value="M" style={styles.input} />
         </Picker>
         <TextInput
-        label="Occupation"
-        placeholder = "Enter Occupation"
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(text) => this.setState({occupation: text})}
-        value={this.state.occupation}
-      /><TextInput
-      label="Place of Registration"
-      placeholder = "Enter location for Registration"
-      style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-      onChangeText={(text) => this.setState({PlaceOfReg: text})}
-      value={this.state.PlaceOfReg}
-    /> 
-    <CalendarPicker
-          label= "Date of Birth"
+          label="Occupation"
+          placeholder="Enter Occupation"
+          style={styles.input}
+          onChangeText={(text) => this.setState({ occupation: text })}
+          value={this.state.occupation}
+        /><TextInput
+          label="Place of Registration"
+          placeholder="Enter location for Registration"
+          style={styles.input}
+          onChangeText={(text) => this.setState({ PlaceOfReg: text })}
+          value={this.state.PlaceOfReg}
+        />
+        <CalendarPicker
+          label="Date of Birth"
           onDateChange={(date) => this.onDateChange(date)}
         />
         <TouchableHighlight
@@ -226,10 +223,9 @@ class RegistrationScreen extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: "#ffffff"
+    padding: 10,
+    backgroundColor: "#ccccff",
+    height: Dimensions.get('window').height
   },
   title: {
     fontSize: 30,
@@ -250,7 +246,20 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: "stretch",
     justifyContent: "center"
-  }
+  },
+  input: {
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    width: 350,
+    height: 40,
+    marginHorizontal: 20,
+    paddingLeft: 45,
+    marginTop: 10,
+    paddingBottom: 10,
+    borderRadius: 20,
+    borderColor: '#6666ff',
+    borderWidth: 1,
+    color: '#1919ff',
+  },
 });
 
 

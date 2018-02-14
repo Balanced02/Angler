@@ -7,7 +7,8 @@ import {
   Button,
   StyleSheet,
   TouchableHighlight,
-  Picker
+  Picker,
+  Dimensions
 } from 'react-native';
 import t from "tcomb-form-native";
 var Form = t.form.Form;
@@ -22,11 +23,11 @@ var Translate = t.struct({
   Language: Language // enum       // a boolean
 });
 
-const options ={};
+const options = {};
 const key = 'trnsl.1.1.20180212T211757Z.c491e9368fbc18e5.1cbb4b5472e08eb131aa08a7f21b2491d704606a';
 
 class CommunicationScreen extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       translatedWords: [],
@@ -36,35 +37,35 @@ class CommunicationScreen extends Component {
   }
 
 
-  translate(){
+  translate() {
     var language = this.state.language;
     var text = this.state.text;
     fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${key}&lang=${language}&text=${text}`)
-    .then(data => {
-      return data.json()
-    })
-    .then(response => {
-      console.log(response.text)
-      this.setState({
-        translatedWords: response.text[0] 
+      .then(data => {
+        return data.json()
       })
-    })
-    .catch(err => console.log("This is an error "+ err))
+      .then(response => {
+        console.log(response.text)
+        this.setState({
+          translatedWords: response.text[0]
+        })
+      })
+      .catch(err => console.log("This is an error " + err))
   }
 
   render() {
     return (
-      <ScrollView>
-         <TextInput
-         multiline = {true}
-         numberOfLines = {4}
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(text) => this.setState({text: text})}
-        value={this.state.text}
-      />
+      <ScrollView style={styles.container} >
+        <TextInput
+          multiline={true}
+          numberOfLines={4}
+          style={styles.input}
+          onChangeText={(text) => this.setState({ text: text })}
+          value={this.state.text}
+        />
         <Picker
           selectedValue={this.state.language}
-          onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+          onValueChange={(itemValue, itemIndex) => this.setState({ language: itemValue })}>
           <Picker.Item label="Russian" value="ru" />
           <Picker.Item label="Spanish" value="es" />
           <Picker.Item label="French" value="fr" />
@@ -78,15 +79,19 @@ class CommunicationScreen extends Component {
           <Text style={styles.buttonText}>Translate</Text>
         </TouchableHighlight>
 
-        <Text>{this.state.translatedWords}</Text>
-       
-</ScrollView>
+        <Text style={styles.translated} >{this.state.translatedWords}</Text>
+
+      </ScrollView>
     );
   }
 }
 
 var styles = StyleSheet.create({
- 
+  container: {
+    padding: 10,
+    backgroundColor: "#ccccff",
+    height: Dimensions.get('window').height
+  },
   buttonText: {
     fontSize: 18,
     color: "white",
@@ -101,6 +106,22 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: "stretch",
     justifyContent: "center"
+  },
+  input: {
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    width: 350,
+    height: Dimensions.get('window').height / 3,
+    marginHorizontal: 20,
+    paddingLeft: 45,
+    marginTop: 10,
+    paddingBottom: 10,
+    borderColor: '#6666ff',
+    borderWidth: 1,
+    color: '#1919ff',
+  },
+  translated: {
+    fontSize: 30,
+    fontWeight: 'bold',
   }
 });
 
