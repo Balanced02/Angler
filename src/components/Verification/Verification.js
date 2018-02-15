@@ -1,16 +1,41 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
+import PouchDB from "pouchdb-react-native";
+import PouchFind from "pouchdb-find";
+import Credentials from "../Registration/credentials";
 
+
+PouchDB.plugin(PouchFind);
+const db = new PouchDB("angler");
+const remoteCouch = Credentials.cloudant_url;
 export default class VerificationScreen extends React.Component {
   state = {
     hasCameraPermission: null,
+    id: []
+  }
+
+  getPouchNotes() {
+    // const Username = this.props.user.username;
+
+    db.allDocs({
+      include_docs: true,
+      attachments: true
+    })
+      .then(data => {
+        console.log("From the endpoint"+data.rows);
+        this.setState({
+          id: data.rows                                                                                                                                             
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({hasCameraPermission: status === 'granted'});
-    }
+   const notes = await this.getPouchNotes()  
+  }
 
   render() {
     const { hasCameraPermission } = this.state;
@@ -32,6 +57,14 @@ export default class VerificationScreen extends React.Component {
   }
 
   _handleBarCodeRead = ({ type, data }) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+
+    if(this.state.id.length != 0){
+      console.log(this.state.id[0])
+      alert(`User with id: ${this.state.id[0].id} verified!`);
+    }
+    else{
+      alert("Could not verify this user")
+    }
+    
   }
 }

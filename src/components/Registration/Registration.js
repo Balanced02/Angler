@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import {
   StyleSheet,
   View,
+  ScrollView,
   TouchableOpacity,
   Image,
   Text,
@@ -76,24 +77,7 @@ class RegistrationScreen extends Component {
     });
   }
 
-  getPouchNotes() {
-    // const Username = this.props.user.username;
-
-    db
-      .find({
-        selector: { username: this.props.user._doc.username },
-        fields: ["_id", "username", "date", "_rev", "body", "done"]
-      })
-      .then(data => {
-        this.setState({
-          noteList: {
-            ...this.state.noteList,
-            notes: data.docs
-          }
-        });
-      })
-      .catch(err => console.log(err));
-  }
+ 
 
   createPouchNote() {
     const { selectedStartDate } = this.state;
@@ -119,6 +103,14 @@ class RegistrationScreen extends Component {
           PlaceOfReg: "",
           gender: ""
         });
+        Alert.alert(
+          'Success',
+          'You have registered Successfully',
+          [
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+        )
       })
       .catch(err => {
         console.log(err)
@@ -168,7 +160,7 @@ class RegistrationScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container} >
+      <ScrollView style={styles.container} >
         <TextInput
           label="Full Name"
           placeholder="Enter Full Name"
@@ -216,14 +208,15 @@ class RegistrationScreen extends Component {
         >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 var styles = StyleSheet.create({
   container: {
-    padding: 10,
+    // padding: 10,
+    margin: "auto",
     backgroundColor: "#ccccff",
     height: Dimensions.get('window').height
   },
@@ -249,13 +242,13 @@ var styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    width: 350,
+    width: "90%",
+    margin:"auto",
     height: 40,
     marginHorizontal: 20,
-    paddingLeft: 45,
     marginTop: 10,
     paddingBottom: 10,
-    borderRadius: 20,
+    borderRadius: 4,
     borderColor: '#6666ff',
     borderWidth: 1,
     color: '#1919ff',
