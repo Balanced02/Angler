@@ -33,6 +33,9 @@ import PouchDB from "pouchdb-react-native";
 import PouchFind from "pouchdb-find";
 import Credentials from "./credentials";
 import { Camera, Permissions } from "expo";
+import { CheckBox } from 'react-native-elements'
+
+
 
 PouchDB.plugin(PouchFind);
 const db = new PouchDB("angler");
@@ -46,6 +49,8 @@ class RegistrationScreen extends Component {
       selectedItem: undefined,
       selected1: "key1",
       showToast: false,
+      checked: false,
+      verified: false,
       results: {
         items: []
       },
@@ -87,9 +92,10 @@ class RegistrationScreen extends Component {
     var Person = {
       _id: date,
       name: this.state.fullName,
-      gender: this.state.gender,
+      gender: this.state.checked ? 'M': 'F',
       location: this.state.PlaceOfReg,
       occupation: this.state.occupation,
+      verified: this.state.verified,
       DOB: startDate
     };
     db
@@ -168,14 +174,26 @@ class RegistrationScreen extends Component {
           onChangeText={(text) => this.setState({ fullName: text })}
           value={this.state.fullName}
         />
-        <Picker
-          selectedValue={this.state.gender}
-          label="Gender"
-          style={styles.input}
-          onValueChange={(itemValue, itemIndex) => this.setState({ gender: itemValue })}>
-          <Picker.Item label="Female" value="F" style={styles.input} />
-          <Picker.Item label="Male" value="M" style={styles.input} />
-        </Picker>
+        <CheckBox
+            center
+            title='Male'
+            checked={this.state.checked}
+            onIconPress={() => this.setState({checked:!this.state.checked})}
+            />
+        
+        <CheckBox
+            center
+            title='Female'
+            checked={!this.state.checked}
+            onIconPress={() => this.setState({checked:!this.state.checked})}
+            />
+       
+        <CheckBox
+            center
+            title='Verified'
+            checked={this.state.verified}
+            onIconPress={() => this.setState({verified:!this.state.verified})}
+            />
         <TextInput
           label="Occupation"
           placeholder="Enter Occupation"
