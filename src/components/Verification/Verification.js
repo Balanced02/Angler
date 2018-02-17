@@ -59,6 +59,7 @@ export default class VerificationScreen extends React.Component {
   _handleBarCodeRead = ({ type, data }) => {
 
     if(this.state.id.length != 0){
+      
       console.log(this.state.id[0])
       alert(`User with id: ${this.state.id[0].id} verified!`);
     }

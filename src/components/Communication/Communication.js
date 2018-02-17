@@ -10,6 +10,15 @@ import {
   Picker,
   Dimensions
 } from 'react-native';
+import { Constants, Speech } from 'expo';
+
+const EXAMPLES = [
+  { language: 'en', text: 'Hello world' },
+  { language: 'es', text: 'Hola mundo' },
+  { language: 'en', text: 'Charlie Cheever chased a chortling choosy child' },
+  { language: 'en', text: 'Adam Perry ate a pear in pairs in Paris' },
+];
+
 import t from "tcomb-form-native";
 var Form = t.form.Form;
 var Language = t.enums({
@@ -33,6 +42,10 @@ class CommunicationScreen extends Component {
       translatedWords: [],
       language: "ru",
       text: "",
+      selectedExample: EXAMPLES[0],
+      inProgress: false,
+      pitch: 1,
+      rate: 0.75,
     }
   }
 
@@ -80,10 +93,43 @@ class CommunicationScreen extends Component {
         </TouchableHighlight>
 
         <Text style={styles.translated} >{this.state.translatedWords}</Text>
+        <Button
+            disabled={this.state.inProgress}
+            onPress={this._speak}
+            title="Speak"
+          />
 
+            <Button
+            disabled={!this.state.inProgress}
+            onPress={this._stop}
+            title="Stop"
+          />
       </ScrollView>
     );
   }
+
+  _speak = () => {
+    const start = () => {
+      this.setState({ inProgress: true });
+    };
+    const complete = () => {
+      this.state.inProgress && this.setState({ inProgress: false });
+    };
+
+    Speech.speak(this.state.translatedWords, {
+      language: this.state.language,
+      pitch: this.state.pitch,
+      rate: this.state.rate,
+      onStart: start,
+      onDone: complete,
+      onStopped: complete,
+      onError: complete,
+    });
+  };
+
+  _stop = () => {
+    Speech.stop();
+  };
 }
 
 var styles = StyleSheet.create({
